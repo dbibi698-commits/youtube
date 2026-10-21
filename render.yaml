@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: murshid-developer
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --workers 1 --threads 4 --timeout 120
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: ADMIN_EMAIL
+        value: dbibi698@gmail.com
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATA_DIR
+        value: /var/data/data
+      - key: UPLOADS_DIR
+        value: /var/data/uploads
+    disk:
+      name: murshid-developer-data
+      mountPath: /var/data
+      sizeGB: 1
